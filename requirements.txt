@@ -1,0 +1,7 @@
+# Web framework
+Flask==3.0.3
+flasgger==0.9.7.1
+marshmallow==3.21.3
+pytest==8.2.2
+apispec==6.6.1
+apispec-webframeworks==1.1.0
