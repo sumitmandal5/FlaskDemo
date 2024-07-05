@@ -183,6 +183,53 @@
             }
           }
         }
+      },
+      "post": {
+        "summary": "Creates and stores the given Person object in the backend.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Person"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/people/{username}": {
+      "delete": {
+        "summary": "Deletes a user.",
+        "parameters": [
+          {
+            "name": "username",
+            "in": "path",
+            "type": "string",
+            "required": true,
+            "description": "Username to delete"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Deleted the person."
+          },
+          "404": {
+            "description": "Person not found."
+          }
+        }
       }
     }
   }
