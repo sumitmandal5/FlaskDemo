@@ -9,9 +9,9 @@ from crud import get_persons, get_person, delete_person, get_person_closematch, 
 router = Blueprint('persona', __name__)
 
 
-@router.route('/swagger/<path:path>')
+@router.route('/static/<path:path>')
 def send_swagger(path):
-    return send_from_directory('swagger', path)
+    return send_from_directory('static', path)
 
 
 @router.route('/', methods=['GET'])
