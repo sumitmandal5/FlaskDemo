@@ -9,5 +9,67 @@
     {
       "url": "/"
     }
-  ]
+  ],
+  "components": {
+    "schemas": {
+      "Person": {
+        "type": "object",
+        "properties": {
+          "job": {
+            "type": "string",
+            "description": "Job title"
+          },
+          "company": {
+            "type": "string",
+            "description": "Company name"
+          },
+          "ssn": {
+            "type": "string",
+            "description": "Social Security Number"
+          },
+          "residence": {
+            "type": "string",
+            "description": "Residence"
+          },
+          "current_location": {
+            "type": "array",
+            "items": {
+              "type": "number"
+            }
+          },
+          "blood_group": {
+            "type": "string"
+          },
+          "website": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "username": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "sex": {
+            "type": "string"
+          },
+          "address": {
+            "type": "string"
+          },
+          "mail": {
+            "type": "string"
+          },
+          "birthdate": {
+            "type": "datetime"
+          }
+        },
+        "required": [
+          "username",
+          "name"
+        ]
+      }
+    }
+  }
 }
