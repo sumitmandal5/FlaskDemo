@@ -1,14 +1,17 @@
 from math import ceil
 
-from flasgger import swag_from
-from flask import Blueprint, jsonify, request, url_for
+from flask import Blueprint, jsonify, request, url_for, send_from_directory
 from marshmallow import ValidationError
-from schemas import PersonSchema
 
 from crud import get_persons, get_person, delete_person, get_person_closematch, count_persons, create_person, \
     update_person
 
 router = Blueprint('persona', __name__)
+
+
+@router.route('/static/<path:path>')
+def send_swagger(path):
+    return send_from_directory('static', path)
 
 
 @router.route('/', methods=['GET'])
@@ -23,32 +26,6 @@ def get_all_people_endpoint():
 
 
 @router.route('/people', methods=['GET'])
-@swag_from({
-    'parameters': [
-        {
-            'name': 'page',
-            'in': 'query',
-            'type': 'integer',
-            'default': 1,
-            'description': 'Page number for pagination'
-        },
-        {
-            'name': 'per_page',
-            'in': 'query',
-            'type': 'integer',
-            'default': 10,
-            'description': 'Number of items per page'
-        }
-    ],
-    'responses': {
-        200: {
-            'description': 'A list of persons with pagination',
-            'schema': {
-                'type': 'PaginatedPersonsResponseSchema'
-            }
-        }
-    }
-})
 def list_persons():
     '''
         Complexity Analysis
@@ -81,32 +58,6 @@ def list_persons():
 
 
 @router.route('/search/<username>', methods=['GET'])
-@swag_from({
-    'parameters': [
-        {
-            'name': 'username',
-            'in': 'path',
-            'type': 'string',
-            'required': True,
-            'description': 'Username to search'
-        }
-    ],
-    'responses': {
-        200: {
-            'description': 'Person details',
-            'schema': {
-                'type': 'PaginatedPersonsResponseSchema'
-            }
-
-        },
-        404: {
-            'description': 'Person not found. Close matches of the given userName',
-            'schema': {
-                'type': 'SuggestionsResponseSchema'
-            }
-        }
-    }
-})
 def get_person_endpoint(username):
     '''
         Complexity Analysis
@@ -123,25 +74,6 @@ def get_person_endpoint(username):
 
 
 @router.route('/people/<username>', methods=['DELETE'])
-@swag_from({
-    'parameters': [
-        {
-            'name': 'username',
-            'in': 'path',
-            'type': 'string',
-            'required': True,
-            'description': 'Username of the person to delete'
-        }
-    ],
-    'responses': {
-        200: {
-            'description': 'Deleted person'
-        },
-        404: {
-            'description': 'Person not found'
-        }
-    }
-})
 def delete_person_endpoint(username):
     '''
         Complexity Analysis
@@ -154,41 +86,6 @@ def delete_person_endpoint(username):
 
 
 @router.route('/people', methods=['POST'])
-@swag_from({
-    'parameters': [
-        {
-            'name': 'body',
-            'in': 'body',
-            'schema': {
-                'type': 'PersonSchema'
-            },
-            'description': 'Person data to be created'
-        }
-    ],
-    'responses': {
-        201: {
-            'description': 'Person successfully created',
-            'schema': {
-                'type': 'PersonSchema'
-            }
-        },
-        400: {
-            'description': 'Validation error',
-            'schema': {
-                'type': 'object',
-                'properties': {
-                    'error': {'type': 'object'}
-                },
-                'example': {
-                    'error': {
-                        'name': ['Missing data for required field.'],
-                        'email': ['Not a valid email address.']
-                    }
-                }
-            }
-        }
-    }
-})
 def create_person_endpoint():
     '''
         Complexity Analysis
@@ -205,60 +102,6 @@ def create_person_endpoint():
 
 
 @router.route('/people/<username>', methods=['PUT'])
-@swag_from({
-    'parameters': [
-        {
-            'name': 'username',
-            'in': 'path',
-            'type': 'string',
-            'required': True,
-            'description': 'Username of the person to update'
-        },
-        {
-            'name': 'body',
-            'in': 'body',
-            'schema': {
-                'type': 'PersonSchema'
-            },
-            'description': 'Updated person data'
-        }
-    ],
-    'responses': {
-        200: {
-            'description': 'Person successfully updated',
-            'schema': {
-                'type': 'PersonSchema'
-            }
-        },
-        400: {
-            'description': 'Validation error',
-            'schema': {
-                'type': 'object',
-                'properties': {
-                    'error': {'type': 'object'}
-                },
-                'example': {
-                    'error': {
-                        'name': ['Missing data for required field.'],
-                        'mail': ['Not a valid email address.']
-                    }
-                }
-            }
-        },
-        404: {
-            'description': 'Person not found',
-            'schema': {
-                'type': 'object',
-                'properties': {
-                    'error': {'type': 'string'}
-                },
-                'example': {
-                    'error': 'Person not found'
-                }
-            }
-        }
-    }
-})
 def update_person_endpoint(username):
     '''
         Complexity Analysis
