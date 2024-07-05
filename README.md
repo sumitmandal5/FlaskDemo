@@ -22,7 +22,7 @@ Steps to run locally in IDE.
 3. Click on the run button
 
 Swagger UI:
-http://localhost:5000/docs/
+http://localhost:5000/swagger/
 
 Command to run unit tests:
 python -m pytest
