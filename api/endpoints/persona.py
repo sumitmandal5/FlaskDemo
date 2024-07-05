@@ -1,14 +1,18 @@
 from math import ceil
 
-
 from flask import Blueprint, jsonify, request, url_for, send_from_directory
 from marshmallow import ValidationError
-from schemas import PersonSchema
 
 from crud import get_persons, get_person, delete_person, get_person_closematch, count_persons, create_person, \
     update_person
 
 router = Blueprint('persona', __name__)
+
+
+@router.route('/swagger/<path:path>')
+def send_swagger(path):
+    return send_from_directory('swagger', path)
+
 
 @router.route('/', methods=['GET'])
 def test():
@@ -19,8 +23,6 @@ def test():
 @router.route('/people', methods=['GET'])
 def get_all_people_endpoint():
     return jsonify(get_persons())'''
-
-
 
 
 @router.route('/people', methods=['GET'])
@@ -55,8 +57,6 @@ def list_persons():
     })
 
 
-
-
 @router.route('/search/<username>', methods=['GET'])
 def get_person_endpoint(username):
     '''
@@ -73,8 +73,6 @@ def get_person_endpoint(username):
     return jsonify(person)
 
 
-
-
 @router.route('/people/<username>', methods=['DELETE'])
 def delete_person_endpoint(username):
     '''
@@ -85,8 +83,6 @@ def delete_person_endpoint(username):
     if deleted_person is None:
         return jsonify({"error": "Person not found"}), 404
     return jsonify({"message": "Person deleted"})
-
-
 
 
 @router.route('/people', methods=['POST'])
@@ -103,8 +99,6 @@ def create_person_endpoint():
     except ValidationError as err:
         return jsonify({"error": err.messages}), 400
     return jsonify(person), 201
-
-
 
 
 @router.route('/people/<username>', methods=['PUT'])
