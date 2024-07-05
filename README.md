@@ -31,6 +31,5 @@ Todo/Improvements:
 1. add proper logging
 2. add more exception handling
 3. add a config file to read hard-coded file names
-4. Fix - Schema Definitions not present on Swagger
-5. Containerise the applicaiton using Docker.
-6. Deploy the application on AWS.
+4. Containerise the applicaiton using Docker.
+5. Deploy the application on AWS.
