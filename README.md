@@ -31,5 +31,4 @@ Todo/Improvements:
 1. add proper logging
 2. add more exception handling
 3. add a config file to read hard-coded file names
-4. Containerise the applicaiton using Docker.
-5. Deploy the application on AWS.
+4. Deploy the application on AWS.
